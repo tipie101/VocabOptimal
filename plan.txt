@@ -1,0 +1,35 @@
+Vocabulary-App
+
+TODO:
+INPUT FIELD FOR ANSWERING
+READ IN BASIC VOCABULARY FROM TXT-FILE!!! (hardcoded for now)
+
+VocabEntry
+- str "foreign word"  // ID
+- str "translation"
+- int "count"
+- timestamp "last_answer"
+
+VocabTrainer
+// Has a set of rules
+- int max_repitition
+- arr(str) timeouts
+- boolean checkAnswer()
+- pickVocabEntry() // picks at random
+? Communication with DBHandler ?
+
+DBHandler
+- CRUD handles of VocabEntry
+
+Main
+- Handle User-Input
+- Communication with DBHandler  
+
+Views
+Training-Mode
+Edit-Mode
+
+Brainstorm
+- Add nice Animations
+- What Color and Logo to use?
+
