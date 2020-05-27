@@ -1,2 +1,2 @@
 # VocabOptimal
-An Android App to Aid in Learn a New Language
+An Android App to Aid in Learning a New Language
