@@ -1,6 +1,12 @@
 Vocabulary-App
 
 TODO:
+
+Options:
+  Redundancy between VocabTrainer and DBHelper
+  Merging Both
+  
+
 INPUT FIELD FOR ANSWERING
 READ IN BASIC VOCABULARY FROM TXT-FILE!!! (hardcoded for now)
 

@@ -6,13 +6,13 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/returnButton"
+        android:id="@+id/return_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="298dp"
-        android:layout_marginBottom="646dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="280dp"
+        android:layout_marginBottom="523dp"
         android:text="@string/return_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,10 +27,41 @@
         android:layout_marginTop="294dp"
         android:layout_marginEnd="171dp"
         android:layout_marginBottom="418dp"
-        android:text="not working"
+        android:text="nothing to see"
+        android:textSize="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.645"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/translation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="405dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="307dp"
+        android:inputType="textVisiblePassword"
+        android:text="    "
+        android:textSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.808" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

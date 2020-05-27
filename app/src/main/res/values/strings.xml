@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">VocabOptimal</string>
     <string name="return_button">Return</string>
+    <string name="next">NEXT</string>
 </resources>

@@ -2,6 +2,7 @@ package com.timkatimkah.vocaboptimal;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -26,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String LAST_TRY = "lastTry";
 
 
-    public DBHelper(Context context) {
+    DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -43,8 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE " + TABLE_VOCAB +
                 "(" +
                 FOREIGN_WORD + " TEXT PRIMARY KEY, " +
-                TRANSLATION + " TEXT PRIMARY KEY, " +
-                COUNT + " INTEGER PRIMARY KEY, " +
+                TRANSLATION + " TEXT, " +
+                COUNT + " INTEGER, " +
                 LAST_TRY + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
         db.execSQL(createTable);
     }
@@ -59,11 +60,49 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     ArrayList<VocabEntry> loadVocabulary() {
-        System.out.println("Loading Vocab!");
+        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<VocabEntry> vocabEntries = new ArrayList<VocabEntry>();
-        vocabEntries.add(new VocabEntry(0, "ciao", "hey", new Date().getTime()));
-        vocabEntries.add(new VocabEntry(0, "ciao1", "hey1", new Date().getTime()));
-        vocabEntries.add(new VocabEntry(0, "ciao2", "hey2", new Date().getTime()));
+        String readVocab = "SELECT * FROM " + TABLE_VOCAB;
+        Cursor cursor = db.rawQuery(readVocab, null);
+        // TODO: create a helper function
+        if (cursor.moveToFirst()) {
+            do {
+                vocabEntries.add(
+                        new VocabEntry(
+                                cursor.getInt(cursor.getColumnIndex(COUNT)),
+                                cursor.getString(cursor.getColumnIndex(FOREIGN_WORD)),
+                                cursor.getString(cursor.getColumnIndex(TRANSLATION)),
+                                cursor.getLong(cursor.getColumnIndex(LAST_TRY))
+                        )
+                );
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return vocabEntries;
+    }
+
+    ArrayList<VocabEntry> loadVocabulary(int maxCount) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<VocabEntry> vocabEntries = new ArrayList<VocabEntry>();
+        String readVocab = "SELECT * FROM " + TABLE_VOCAB + " WHERE " + COUNT + " < ?";
+        String[] params = {"" + maxCount};
+        Cursor cursor = db.rawQuery(readVocab, params);
+        // TODO: create a helper function
+        if (cursor.moveToFirst()) {
+            do {
+                vocabEntries.add(
+                        new VocabEntry(
+                                cursor.getInt(cursor.getColumnIndex(COUNT)),
+                                cursor.getString(cursor.getColumnIndex(FOREIGN_WORD)),
+                                cursor.getString(cursor.getColumnIndex(TRANSLATION)),
+                                cursor.getLong(cursor.getColumnIndex(LAST_TRY))
+                        )
+                );
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
         return vocabEntries;
     }
 }
