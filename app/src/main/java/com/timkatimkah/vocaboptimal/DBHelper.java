@@ -11,8 +11,7 @@ import java.util.Date;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    // consider singleton-pattern: https://guides.codepath.com/android/local-databases-with-sqliteopenhelper
-
+    // TODO: consider singleton-pattern: https://guides.codepath.com/android/local-databases-with-sqliteopenhelper
     // Database Info
     private static final String DATABASE_NAME = "vocabOptimal";
     private static final int DATABASE_VERSION = 1;
@@ -43,8 +42,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_VOCAB +
                 "(" +
-                FOREIGN_WORD + " TEXT PRIMARY KEY, " +
-                TRANSLATION + " TEXT, " +
+                TRANSLATION + " TEXT PRIMARY KEY, " +
+                FOREIGN_WORD + " TEXT, " +
                 COUNT + " INTEGER, " +
                 LAST_TRY + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
         db.execSQL(createTable);
@@ -104,6 +103,32 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return vocabEntries;
+    }
+
+    void saveNewVocab(String vocab, String translation) {
+        long currentMillis = new Date().getTime();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String insert = "INSERT INTO " + TABLE_VOCAB + " (" +
+                FOREIGN_WORD + ", " +
+                TRANSLATION + ", " +
+                COUNT + ", " +
+                LAST_TRY
+                + ") VALUES('" +
+                vocab + "', '" +
+                translation + "', " +
+                "0, " + currentMillis + ")";
+        db.execSQL(insert);
+        db.close();
+    }
+
+    void updateEntry(String translation, int count, long lastTry) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String insert = "UPDATE " + TABLE_VOCAB + " SET " +
+                COUNT + " = " + count + ", " +
+                LAST_TRY + " = " + lastTry
+                + " WHERE " + TRANSLATION + " = '" + translation + "'";
+        db.execSQL(insert);
+        db.close();
     }
 }
 

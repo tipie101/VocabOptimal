@@ -29,7 +29,7 @@ class VocabTrainer {
     private void setDefaultTimeouts(int number) {
         this.timeouts =  new int[number];
         for (int i = 0; i < number; i++) {
-            timeouts[i] = i * 60 * 100 * timeoutStep;
+            timeouts[i] = i * 60 * 1000 * timeoutStep;
         }
     }
 

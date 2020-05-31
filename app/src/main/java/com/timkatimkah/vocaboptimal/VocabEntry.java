@@ -50,7 +50,7 @@ class VocabEntry {
         return lastTry;
     }
 
-    void setLastTry(int lastTry) {
+    void setLastTry(long lastTry) {
         this.lastTry = lastTry;
     }
 }

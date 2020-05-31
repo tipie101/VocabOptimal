@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.Date;
+
 public class VocabCardFragment extends Fragment {
 
     private DBHelper dbHelper;
@@ -41,12 +43,16 @@ public class VocabCardFragment extends Fragment {
             public void onClick(View view) {
                 TextView answerField = (TextView) getActivity().findViewById(R.id.translation);
                 if(answerField.getText().toString().trim().equals(currentEntry.getTranslation())) {
-                    // TODO: Update
-                    currentEntry = trainer.pickEntry();
-                    TextView vocabField = (TextView) getActivity().findViewById(R.id.foreignWordView);
-                    vocabField.setText(currentEntry.getForeignWord());
-                    answerField.setText("");
+                    currentEntry.setCount(currentEntry.getCount() + 1);
+                } else {
+                    currentEntry.setCount(0);
                 }
+                currentEntry.setLastTry(new Date().getTime());
+                dbHelper.updateEntry(currentEntry.getTranslation(), currentEntry.getCount(), currentEntry.getLastTry());
+                answerField.setText("");
+                currentEntry = trainer.pickEntry();
+                TextView vocabField = (TextView) getActivity().findViewById(R.id.foreignWordView);
+                vocabField.setText(currentEntry.getForeignWord());
             }
         });
 
