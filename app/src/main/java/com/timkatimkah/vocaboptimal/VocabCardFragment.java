@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Date;
 
 public class VocabCardFragment extends Fragment {
@@ -44,8 +46,12 @@ public class VocabCardFragment extends Fragment {
                 TextView answerField = (TextView) getActivity().findViewById(R.id.translation);
                 if(answerField.getText().toString().trim().equals(currentEntry.getTranslation())) {
                     currentEntry.setCount(currentEntry.getCount() + 1);
+                    Snackbar.make(view, "CORRECT ANSWER!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 } else {
                     currentEntry.setCount(0);
+                    Snackbar.make(view, "WRONG ANSWER!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
                 currentEntry.setLastTry(new Date().getTime());
                 dbHelper.updateEntry(currentEntry.getTranslation(), currentEntry.getCount(), currentEntry.getLastTry());
