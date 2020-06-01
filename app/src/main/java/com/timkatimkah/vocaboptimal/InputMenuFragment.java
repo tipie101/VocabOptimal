@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class InputMenuFragment extends Fragment {
 
     private DBHelper dbHelper;
@@ -38,14 +40,19 @@ public class InputMenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // save to DB
-                TextView textViewTranslation = (TextView) getActivity().findViewById(R.id.newVocab);
-                TextView textViewVocab = (TextView) getActivity().findViewById(R.id.newVocabTranslation);
-                String vocab = textViewVocab.getText().toString();
-                String translation = textViewTranslation.getText().toString();
+                TextView textViewVocab = (TextView) getActivity().findViewById(R.id.newVocab);
+                TextView textViewTranslation = (TextView) getActivity().findViewById(R.id.newVocabTranslation);
+                String vocab = textViewVocab.getText().toString().trim();
+                String translation = textViewTranslation.getText().toString().trim();
 
+                if (!dbHelper.hasTranslation(translation)) {
                 dbHelper.saveNewVocab(vocab, translation);
                 textViewTranslation.setText("");
                 textViewVocab.setText("");
+                } else {
+                    Snackbar.make(view, "VOCAB ALREADY EXISTS!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 

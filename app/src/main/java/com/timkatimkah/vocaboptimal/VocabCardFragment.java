@@ -35,16 +35,16 @@ public class VocabCardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         currentEntry = trainer.pickEntry();
-        System.out.println(currentEntry.getForeignWord());
-        TextView textView = (TextView) getActivity().findViewById(R.id.foreignWordView);
-        textView.setText(currentEntry.getForeignWord());
+        System.out.println(currentEntry.getTranslation());
+        TextView textView = (TextView) getActivity().findViewById(R.id.translation);
+        textView.setText(currentEntry.getTranslation());
 
         Button button = getActivity().findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView answerField = (TextView) getActivity().findViewById(R.id.translation);
-                if(answerField.getText().toString().trim().equals(currentEntry.getTranslation())) {
+                TextView answerField = (TextView) getActivity().findViewById(R.id.foreignWordView);
+                if(answerField.getText().toString().trim().equals(currentEntry.getForeignWord())) {
                     currentEntry.setCount(currentEntry.getCount() + 1);
                     Snackbar.make(view, "CORRECT ANSWER!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -57,8 +57,8 @@ public class VocabCardFragment extends Fragment {
                 dbHelper.updateEntry(currentEntry.getTranslation(), currentEntry.getCount(), currentEntry.getLastTry());
                 answerField.setText("");
                 currentEntry = trainer.pickEntry();
-                TextView vocabField = (TextView) getActivity().findViewById(R.id.foreignWordView);
-                vocabField.setText(currentEntry.getForeignWord());
+                TextView vocabField = (TextView) getActivity().findViewById(R.id.translation);
+                vocabField.setText(currentEntry.getTranslation());
             }
         });
 

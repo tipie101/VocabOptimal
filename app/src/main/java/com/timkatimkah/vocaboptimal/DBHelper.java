@@ -1,6 +1,7 @@
 package com.timkatimkah.vocaboptimal;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -108,27 +109,33 @@ public class DBHelper extends SQLiteOpenHelper {
     void saveNewVocab(String vocab, String translation) {
         long currentMillis = new Date().getTime();
         SQLiteDatabase db = this.getWritableDatabase();
-        String insert = "INSERT INTO " + TABLE_VOCAB + " (" +
-                FOREIGN_WORD + ", " +
-                TRANSLATION + ", " +
-                COUNT + ", " +
-                LAST_TRY
-                + ") VALUES('" +
-                vocab + "', '" +
-                translation + "', " +
-                "0, " + currentMillis + ")";
-        db.execSQL(insert);
+        ContentValues values = new ContentValues();
+        values.put(COUNT, 0);
+        values.put(LAST_TRY, currentMillis);
+        values.put(TRANSLATION, translation);
+        values.put(FOREIGN_WORD, vocab);
+        db.insert(TABLE_VOCAB, null, values);
         db.close();
     }
 
     void updateEntry(String translation, int count, long lastTry) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String insert = "UPDATE " + TABLE_VOCAB + " SET " +
-                COUNT + " = " + count + ", " +
-                LAST_TRY + " = " + lastTry
-                + " WHERE " + TRANSLATION + " = '" + translation + "'";
-        db.execSQL(insert);
+        ContentValues values = new ContentValues();
+        values.put(COUNT, count);
+        values.put(LAST_TRY, lastTry);
+        db.update(TABLE_VOCAB, values, TRANSLATION + " = ?", new String[] {translation});
         db.close();
+    }
+
+    boolean hasTranslation(String key) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String exists = "SELECT EXISTS(SELECT 1 FROM " + TABLE_VOCAB + " WHERE " + TRANSLATION + "= ?);";
+        Cursor cursor = db.rawQuery(exists, new String[] {key});
+        cursor.moveToFirst();
+        boolean found = 1 == cursor.getInt(0);
+        cursor.close();
+        db.close();
+        return found;
     }
 }
 
