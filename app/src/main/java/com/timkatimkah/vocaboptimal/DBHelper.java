@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -107,6 +109,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     void saveNewVocab(String vocab, String translation) {
+        if (hasTranslation(translation)) {
+            System.out.println("Entry with Translation: '" + translation + "' already exists!");
+            return;
+        }
         long currentMillis = new Date().getTime();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -116,6 +122,14 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(FOREIGN_WORD, vocab);
         db.insert(TABLE_VOCAB, null, values);
         db.close();
+    }
+
+    // Helper-Method
+    // Translation is key, Vocab is Value
+    void saveNewVocabs(Map<String, String> vocabs) {
+        for (Map.Entry me : vocabs.entrySet()) {
+            saveNewVocab(me.getValue().toString(), me.getKey().toString());
+        }
     }
 
     void updateEntry(String translation, int count, long lastTry) {

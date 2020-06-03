@@ -16,8 +16,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DBHelper dbHelper;
 
     final static int PERMISSION_REQUEST_STORAGE = 1000;
     final static int READ_REQUEST_CODE = 42;
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        dbHelper = new DBHelper(getApplicationContext());
     }
 
     @Override
@@ -49,21 +53,24 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == MainActivity.READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 Uri uri = data.getData();
-                String fileContent = readTextFile(uri);
-                Toast.makeText(this, fileContent, Toast.LENGTH_SHORT).show();
+                HashMap<String,String> fileContent = readVocabsFromTextFile(uri);
+                dbHelper.saveNewVocabs(fileContent);
             }
         }
     }
 
-    private String readTextFile(Uri uri){
+    private HashMap<String, String> readVocabsFromTextFile(Uri uri){
+        // translation is key, foreign word is value
+        HashMap<String,String> vocabs = new HashMap();
         BufferedReader reader = null;
-        StringBuilder builder = new StringBuilder();
         try {
             reader = new BufferedReader(new InputStreamReader(getContentResolver().openInputStream(uri)));
-            String line = "";
+            String line;
 
             while ((line = reader.readLine()) != null) {
-                builder.append(line);
+                String[] vocabComponents = line.split("\t");
+                // TODO: Input checks
+                vocabs.put(vocabComponents[1].trim(), vocabComponents[0].trim());
             }
 
         } catch (IOException e) {
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        return builder.toString();
+        return vocabs;
     }
 
 }
