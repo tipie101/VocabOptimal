@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Date;
 
@@ -61,14 +62,21 @@ public class VocabCardFragment extends Fragment {
                 vocabField.setText(currentEntry.getTranslation());
             }
         });
-
-        view.findViewById(R.id.return_button).setOnClickListener(new View.OnClickListener() {
+        TabLayout tabs = view.findViewById(R.id.tabs);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onTabSelected(TabLayout.Tab tab) {
                 NavHostFragment.findNavController(VocabCardFragment.this)
                         .navigate(R.id.action_CardFragment_to_InputMenu);
             }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
+
     }
 
 }

@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,13 +41,23 @@ public class InputMenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.return_card_frag).setOnClickListener(new View.OnClickListener() {
+        TabLayout tabs = view.findViewById(R.id.tabs);
+        tabs.getTabAt(1).select();
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onTabSelected(TabLayout.Tab tab) {
                 NavHostFragment.findNavController(InputMenuFragment.this)
                         .navigate(R.id.action_input_menu_to_card);
             }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
+
+
 
         view.findViewById(R.id.save_vocab).setOnClickListener(new View.OnClickListener() {
             @Override

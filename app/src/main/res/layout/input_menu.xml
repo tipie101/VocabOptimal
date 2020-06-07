@@ -5,29 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/return_card_frag"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="83dp"
-        android:layout_marginEnd="284dp"
-        android:layout_marginBottom="600dp"
-        android:text="@string/return_button"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="650dp"
+        android:clipChildren="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/cards_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CARDS" />
+
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/menu_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="INPUT" />
+
+    </com.google.android.material.tabs.TabLayout>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/newVocab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="176dp"
-        android:layout_marginBottom="510dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginBottom="385dp"
         android:hint="vocabulary entry"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,8 +51,8 @@
         android:id="@+id/newVocabTranslation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="308dp"
-        android:layout_marginBottom="378dp"
+        android:layout_marginTop="394dp"
+        android:layout_marginBottom="292dp"
         android:layout_weight="1"
         android:hint="translation"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,9 +65,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="429dp"
+        android:layout_marginTop="526dp"
         android:layout_marginEnd="307dp"
-        android:layout_marginBottom="254dp"
+        android:layout_marginBottom="157dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,10 +78,10 @@
         android:id="@+id/save_vocab_from_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="157dp"
-        android:layout_marginTop="429dp"
-        android:layout_marginEnd="71dp"
-        android:layout_marginBottom="254dp"
+        android:layout_marginStart="166dp"
+        android:layout_marginTop="526dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="157dp"
         android:text="Load Vocabulary File"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
