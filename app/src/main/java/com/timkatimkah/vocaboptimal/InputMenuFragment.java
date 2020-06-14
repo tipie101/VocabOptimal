@@ -33,7 +33,7 @@ public class InputMenuFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        dbHelper = new DBHelper(getActivity().getApplicationContext());
+        dbHelper = DBHelper.getInstance(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.input_menu, container, false);
         return view;
     }

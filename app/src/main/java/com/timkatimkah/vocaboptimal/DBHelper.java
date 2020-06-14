@@ -14,7 +14,9 @@ import java.util.Map;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    // TODO: consider singleton-pattern: https://guides.codepath.com/android/local-databases-with-sqliteopenhelper
+    // singleton-pattern: https://guides.codepath.com/android/local-databases-with-sqliteopenhelper
+    private static DBHelper dbHelper;
+
     // Database Info
     private static final String DATABASE_NAME = "vocabOptimal";
     private static final int DATABASE_VERSION = 1;
@@ -29,8 +31,16 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String LAST_TRY = "lastTry";
 
 
-    DBHelper(Context context) {
+    private DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    static synchronized DBHelper getInstance(Context context) {
+        if (dbHelper == null) {
+            dbHelper = new DBHelper(context);
+            System.out.println("Initialized db-Helper");
+        }
+        return dbHelper;
     }
 
     // Called when the database connection is being configured.
